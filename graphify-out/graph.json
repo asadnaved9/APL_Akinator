@@ -1,0 +1,554 @@
+{
+  "directed": false,
+  "multigraph": false,
+  "graph": {},
+  "nodes": [
+    {
+      "label": "generate_dataset.py",
+      "file_type": "code",
+      "source_file": "data\\generate_dataset.py",
+      "source_location": "L1",
+      "id": "data_generate_dataset_py",
+      "community": 3,
+      "norm_label": "generate_dataset.py"
+    },
+    {
+      "label": "generate_synthetic_player()",
+      "file_type": "code",
+      "source_file": "data\\generate_dataset.py",
+      "source_location": "L97",
+      "id": "data_generate_dataset_generate_synthetic_player",
+      "community": 3,
+      "norm_label": "generate_synthetic_player()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "data\\generate_dataset.py",
+      "source_location": "L177",
+      "id": "data_generate_dataset_main",
+      "community": 3,
+      "norm_label": "main()"
+    },
+    {
+      "label": "probability.py",
+      "file_type": "code",
+      "source_file": "engine\\probability.py",
+      "source_location": "L1",
+      "id": "engine_probability_py",
+      "community": 4,
+      "norm_label": "probability.py"
+    },
+    {
+      "label": "ProbabilityEngine",
+      "file_type": "code",
+      "source_file": "engine\\probability.py",
+      "source_location": "L11",
+      "id": "engine_probability_probabilityengine",
+      "community": 0,
+      "norm_label": "probabilityengine"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "engine\\probability.py",
+      "source_location": "L12",
+      "id": "engine_probability_probabilityengine_init",
+      "community": 0,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".get_probabilities()",
+      "file_type": "code",
+      "source_file": "engine\\probability.py",
+      "source_location": "L20",
+      "id": "engine_probability_probabilityengine_get_probabilities",
+      "community": 0,
+      "norm_label": ".get_probabilities()"
+    },
+    {
+      "label": ".update()",
+      "file_type": "code",
+      "source_file": "engine\\probability.py",
+      "source_location": "L25",
+      "id": "engine_probability_probabilityengine_update",
+      "community": 0,
+      "norm_label": ".update()"
+    },
+    {
+      "label": ".get_top_candidate()",
+      "file_type": "code",
+      "source_file": "engine\\probability.py",
+      "source_location": "L57",
+      "id": "engine_probability_probabilityengine_get_top_candidate",
+      "community": 0,
+      "norm_label": ".get_top_candidate()"
+    },
+    {
+      "label": "Returns sorted list of players by probability.",
+      "file_type": "rationale",
+      "source_file": "engine\\probability.py",
+      "source_location": "L21",
+      "id": "engine_probability_rationale_21",
+      "community": 0,
+      "norm_label": "returns sorted list of players by probability."
+    },
+    {
+      "label": "Updates probabilities using Bayesian inference.         response must be one of:",
+      "file_type": "rationale",
+      "source_file": "engine\\probability.py",
+      "source_location": "L26",
+      "id": "engine_probability_rationale_26",
+      "community": 0,
+      "norm_label": "updates probabilities using bayesian inference.         response must be one of:"
+    },
+    {
+      "label": "Returns the player with the highest probability and their score.",
+      "file_type": "rationale",
+      "source_file": "engine\\probability.py",
+      "source_location": "L58",
+      "id": "engine_probability_rationale_58",
+      "community": 0,
+      "norm_label": "returns the player with the highest probability and their score."
+    },
+    {
+      "label": "selector.py",
+      "file_type": "code",
+      "source_file": "engine\\selector.py",
+      "source_location": "L1",
+      "id": "engine_selector_py",
+      "community": 4,
+      "norm_label": "selector.py"
+    },
+    {
+      "label": "QuestionSelector",
+      "file_type": "code",
+      "source_file": "engine\\selector.py",
+      "source_location": "L5",
+      "id": "engine_selector_questionselector",
+      "community": 1,
+      "norm_label": "questionselector"
+    },
+    {
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "engine\\selector.py",
+      "source_location": "L6",
+      "id": "engine_selector_questionselector_init",
+      "community": 1,
+      "norm_label": ".__init__()"
+    },
+    {
+      "label": ".get_best_attribute()",
+      "file_type": "code",
+      "source_file": "engine\\selector.py",
+      "source_location": "L11",
+      "id": "engine_selector_questionselector_get_best_attribute",
+      "community": 1,
+      "norm_label": ".get_best_attribute()"
+    },
+    {
+      "label": "._get_best_attribute_heuristic()",
+      "file_type": "code",
+      "source_file": "engine\\selector.py",
+      "source_location": "L20",
+      "id": "engine_selector_questionselector_get_best_attribute_heuristic",
+      "community": 1,
+      "norm_label": "._get_best_attribute_heuristic()"
+    },
+    {
+      "label": "._get_best_attribute_entropy()",
+      "file_type": "code",
+      "source_file": "engine\\selector.py",
+      "source_location": "L43",
+      "id": "engine_selector_questionselector_get_best_attribute_entropy",
+      "community": 1,
+      "norm_label": "._get_best_attribute_entropy()"
+    },
+    {
+      "label": ".mark_asked()",
+      "file_type": "code",
+      "source_file": "engine\\selector.py",
+      "source_location": "L93",
+      "id": "engine_selector_questionselector_mark_asked",
+      "community": 1,
+      "norm_label": ".mark_asked()"
+    },
+    {
+      "label": "Returns the attribute that minimizes Expected Entropy.         Falls back to heu",
+      "file_type": "rationale",
+      "source_file": "engine\\selector.py",
+      "source_location": "L12",
+      "id": "engine_selector_rationale_12",
+      "community": 1,
+      "norm_label": "returns the attribute that minimizes expected entropy.         falls back to heu"
+    },
+    {
+      "label": "Marks an attribute as asked so it isn't selected again.",
+      "file_type": "rationale",
+      "source_file": "engine\\selector.py",
+      "source_location": "L94",
+      "id": "engine_selector_rationale_94",
+      "community": 1,
+      "norm_label": "marks an attribute as asked so it isn't selected again."
+    },
+    {
+      "label": "test_simulation.py",
+      "file_type": "code",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L1",
+      "id": "engine_test_simulation_py",
+      "community": 2,
+      "norm_label": "test_simulation.py"
+    },
+    {
+      "label": "load_dataset()",
+      "file_type": "code",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L10",
+      "id": "engine_test_simulation_load_dataset",
+      "community": 2,
+      "norm_label": "load_dataset()"
+    },
+    {
+      "label": "run_simulation()",
+      "file_type": "code",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L15",
+      "id": "engine_test_simulation_run_simulation",
+      "community": 2,
+      "norm_label": "run_simulation()"
+    },
+    {
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L48",
+      "id": "engine_test_simulation_main",
+      "community": 2,
+      "norm_label": "main()"
+    }
+  ],
+  "links": [
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "data\\generate_dataset.py",
+      "source_location": "L97",
+      "weight": 1.0,
+      "source": "data_generate_dataset_py",
+      "target": "data_generate_dataset_generate_synthetic_player",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "data\\generate_dataset.py",
+      "source_location": "L177",
+      "weight": 1.0,
+      "source": "data_generate_dataset_py",
+      "target": "data_generate_dataset_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "data\\generate_dataset.py",
+      "source_location": "L188",
+      "weight": 1.0,
+      "source": "data_generate_dataset_main",
+      "target": "data_generate_dataset_generate_synthetic_player",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "engine_probability_py",
+      "target": "engine_probability_probabilityengine",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L3",
+      "weight": 1.0,
+      "source": "engine_selector_py",
+      "target": "engine_probability_py",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "engine_probability_probabilityengine",
+      "target": "engine_probability_probabilityengine_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "engine_probability_probabilityengine",
+      "target": "engine_probability_probabilityengine_get_probabilities",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L25",
+      "weight": 1.0,
+      "source": "engine_probability_probabilityengine",
+      "target": "engine_probability_probabilityengine_update",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L57",
+      "weight": 1.0,
+      "source": "engine_probability_probabilityengine",
+      "target": "engine_probability_probabilityengine_get_top_candidate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L3",
+      "weight": 0.8,
+      "source": "engine_selector_questionselector",
+      "target": "engine_probability_probabilityengine",
+      "confidence_score": 0.5
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L22",
+      "weight": 1.0,
+      "source": "engine_test_simulation_run_simulation",
+      "target": "engine_probability_probabilityengine"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L59",
+      "weight": 1.0,
+      "source": "engine_probability_probabilityengine_get_top_candidate",
+      "target": "engine_probability_probabilityengine_get_probabilities",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L21",
+      "weight": 1.0,
+      "source": "engine_probability_rationale_21",
+      "target": "engine_probability_probabilityengine_get_probabilities",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L26",
+      "weight": 1.0,
+      "source": "engine_probability_rationale_26",
+      "target": "engine_probability_probabilityengine_update",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\probability.py",
+      "source_location": "L58",
+      "weight": 1.0,
+      "source": "engine_probability_rationale_58",
+      "target": "engine_probability_probabilityengine_get_top_candidate",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L5",
+      "weight": 1.0,
+      "source": "engine_selector_py",
+      "target": "engine_selector_questionselector",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L6",
+      "weight": 1.0,
+      "source": "engine_selector_questionselector",
+      "target": "engine_selector_questionselector_init",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L11",
+      "weight": 1.0,
+      "source": "engine_selector_questionselector",
+      "target": "engine_selector_questionselector_get_best_attribute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L20",
+      "weight": 1.0,
+      "source": "engine_selector_questionselector",
+      "target": "engine_selector_questionselector_get_best_attribute_heuristic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L43",
+      "weight": 1.0,
+      "source": "engine_selector_questionselector",
+      "target": "engine_selector_questionselector_get_best_attribute_entropy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L93",
+      "weight": 1.0,
+      "source": "engine_selector_questionselector",
+      "target": "engine_selector_questionselector_mark_asked",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "INFERRED",
+      "confidence_score": 0.8,
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L23",
+      "weight": 1.0,
+      "source": "engine_test_simulation_run_simulation",
+      "target": "engine_selector_questionselector"
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L17",
+      "weight": 1.0,
+      "source": "engine_selector_questionselector_get_best_attribute",
+      "target": "engine_selector_questionselector_get_best_attribute_heuristic",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L18",
+      "weight": 1.0,
+      "source": "engine_selector_questionselector_get_best_attribute",
+      "target": "engine_selector_questionselector_get_best_attribute_entropy",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L12",
+      "weight": 1.0,
+      "source": "engine_selector_rationale_12",
+      "target": "engine_selector_questionselector_get_best_attribute",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\selector.py",
+      "source_location": "L94",
+      "weight": 1.0,
+      "source": "engine_selector_rationale_94",
+      "target": "engine_selector_questionselector_mark_asked",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L10",
+      "weight": 1.0,
+      "source": "engine_test_simulation_py",
+      "target": "engine_test_simulation_load_dataset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L15",
+      "weight": 1.0,
+      "source": "engine_test_simulation_py",
+      "target": "engine_test_simulation_run_simulation",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L48",
+      "weight": 1.0,
+      "source": "engine_test_simulation_py",
+      "target": "engine_test_simulation_main",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L49",
+      "weight": 1.0,
+      "source": "engine_test_simulation_main",
+      "target": "engine_test_simulation_load_dataset",
+      "confidence_score": 1.0
+    },
+    {
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "engine\\test_simulation.py",
+      "source_location": "L66",
+      "weight": 1.0,
+      "source": "engine_test_simulation_main",
+      "target": "engine_test_simulation_run_simulation",
+      "confidence_score": 1.0
+    }
+  ],
+  "hyperedges": []
+}
