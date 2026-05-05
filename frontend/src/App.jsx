@@ -5,6 +5,7 @@ import { StartScreen } from './components/StartScreen';
 import { QuestionCard } from './components/QuestionCard';
 import { DisambiguationCard } from './components/DisambiguationCard';
 import { ResultCard } from './components/ResultCard';
+import { CorrectionCard } from './components/CorrectionCard';
 
 import './styles.css';
 
@@ -21,6 +22,8 @@ function App() {
     startGame,
     submitAnswer,
     submitDisambiguation,
+    goBack,
+    goToCorrection,
     resetGame,
     questionCount
   } = useGame();
@@ -59,6 +62,7 @@ function App() {
           remainingCandidates={remainingCandidates}
           loading={loading}
           onAnswer={submitAnswer}
+          onBack={goBack}
           questionCount={questionCount}
           banter={banter}
         />
@@ -69,6 +73,7 @@ function App() {
           question={question}
           loading={loading}
           onAnswer={submitDisambiguation}
+          onBack={goBack}
         />
       )}
 
@@ -77,7 +82,15 @@ function App() {
           guess={guess}
           confidence={confidence}
           onRestart={resetGame}
+          onBack={goBack}
+          onWrong={goToCorrection}
           banter={banter}
+        />
+      )}
+
+      {phase === 'correction' && (
+        <CorrectionCard 
+          onRestart={resetGame}
         />
       )}
     </div>

@@ -2,8 +2,8 @@ import React, { useEffect, useRef } from 'react';
 import anime from 'animejs';
 import { getMascotImage } from '../utils/getMascotImage';
 
-export const Mascot = ({ loading, confidence }) => {
-  const imgSrc = getMascotImage(loading, confidence);
+export const Mascot = ({ loading, confidence, selectedTeam }) => {
+  const imgSrc = getMascotImage(selectedTeam);
   const mascotRef = useRef(null);
 
   useEffect(() => {

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { startGameRequest, submitAnswerRequest } from '../api/client';
+import { startGameRequest, submitAnswerRequest, submitBackRequest } from '../api/client';
 
 export const useGame = () => {
   const [sessionId, setSessionId] = useState(null);
@@ -51,7 +51,12 @@ export const useGame = () => {
       setPhase('disambiguation');
     } else {
       setQuestion(data.question);
-      setQuestionCount(prev => prev + 1);
+      if (data.banter === "Let's try that again...") {
+        // We went back, questionCount should decrement in backend but here we handle it
+        setQuestionCount(prev => Math.max(1, prev - 1));
+      } else {
+        setQuestionCount(prev => prev + 1);
+      }
       setPhase('question');
     }
   };
@@ -71,6 +76,23 @@ export const useGame = () => {
 
   const submitDisambiguation = async (answer) => {
     submitAnswer(answer);
+  };
+
+  const goToCorrection = () => {
+    setPhase('correction');
+  };
+
+  const goBack = async () => {
+    if (questionCount <= 1) return;
+    setLoading(true);
+    try {
+      const data = await submitBackRequest(sessionId);
+      processResponse(data);
+    } catch (err) {
+      setError('Failed to go back.');
+    } finally {
+      setLoading(false);
+    }
   };
 
   const resetGame = () => {
@@ -99,6 +121,8 @@ export const useGame = () => {
     startGame,
     submitAnswer,
     submitDisambiguation,
+    goToCorrection,
+    goBack,
     resetGame,
   };
 };

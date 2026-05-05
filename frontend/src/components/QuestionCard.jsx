@@ -1,6 +1,6 @@
 import React from 'react';
-import { Mascot } from './Mascot';
-import { Check, X, HelpCircle, AlertCircle, Minus } from 'lucide-react';
+import mascotImg from '../assets/front_mascot.png';
+import downloadVideo from '../assets/untitled design.mp4';
 
 export const QuestionCard = ({ 
   question, 
@@ -8,87 +8,65 @@ export const QuestionCard = ({
   remainingCandidates, 
   loading, 
   onAnswer,
+  onBack,
   questionCount,
   banter
 }) => {
   return (
-    <div className="glass-card">
-      <div className="progress-header-bar" style={{ width: `${confidence * 100}%` }}></div>
-      
-      <Mascot loading={loading} confidence={confidence} />
-      
-      <div className="question-container">
-        <span className="question-label">Question #{questionCount || '?'}</span>
-        <div className="question-text">
-          {loading ? "Deciphering..." : question}
-        </div>
+    <div className="game-screen-container">
+      {/* Background decorations shared with start screen */}
+      <div className="bg-decorations">
+        <div className="diamond d1"></div>
+        <div className="diamond d2"></div>
+        <div className="diamond d3"></div>
+        <div className="diamond d4"></div>
+        <div className="diamond d5"></div>
       </div>
-      
-      <div className="btn-grid">
-        <button 
-          className="action-btn btn-yes" 
-          onClick={() => onAnswer('yes')} 
-          disabled={loading}
-        >
-          <Check size={20} /> Yes
-        </button>
-        <button 
-          className="action-btn btn-no" 
-          onClick={() => onAnswer('no')} 
-          disabled={loading}
-        >
-          <X size={20} /> No
-        </button>
-        <button 
-          className="action-btn btn-dont-know" 
-          onClick={() => onAnswer('dont_know')} 
-          disabled={loading}
-        >
-          <AlertCircle size={20} /> Don't Know
-        </button>
-        <button 
-          className="action-btn btn-probably" 
-          onClick={() => onAnswer('probably')} 
-          disabled={loading}
-        >
-          <HelpCircle size={20} /> Probably
-        </button>
-        <button 
-          className="action-btn btn-probably-not" 
-          onClick={() => onAnswer('probably_not')} 
-          disabled={loading}
-        >
-          <Minus size={20} /> Probably Not
-        </button>
-      </div>
-      
-      <div className="metrics-container">
-        <div className="metric-item">
-          <div className="metric-header">
-            <span>Progress Bar</span>
-            <span>{Math.round(confidence * 100)}%</span>
-          </div>
-          <div className="metric-bar-bg">
-            <div 
-              className="metric-bar-fill confidence-fill" 
-              style={{ width: `${confidence * 100}%` }}
-            ></div>
-          </div>
-        </div>
-        
-        <div className="metric-item">
-          <div className="metric-header">
-            <span>Remaining Candidates</span>
-            <span>{remainingCandidates}</span>
+
+      <div className="game-header">
+        <div className="mini-logo-container">
+          <h2 className="mini-logo-text">akinator<span className="registered">®</span></h2>
+          <div className="language-selector">
+            English
           </div>
         </div>
       </div>
 
-      {banter && (
-        <div className="banter-box mt-4">
-          "{banter}"
+      <div className="game-content-row">
+        <div className="game-mascot-col" style={{ overflow: 'hidden', borderRadius: '50%', width: '350px', height: '350px', flexShrink: 0 }}>
+          <video 
+            src={downloadVideo} 
+            autoPlay 
+            loop 
+            muted 
+            playsInline 
+            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
+          />
         </div>
-      )}
+        
+        <div className="game-question-col ">
+          <div className="question-bubble-wrapper">
+            <div className="question-number-tab">
+              <span className="diamond-bullet top-diamond">♦</span>
+              <span className="q-num">{questionCount || '1'}</span>
+              <span className="diamond-bullet bottom-diamond">♦</span>
+            </div>
+            <div className="question-bubble-body">
+              {loading ? "Consulting the crystal ball..." : question}
+            </div>
+          </div>
+          
+          <div className="answer-options-box">
+            <button className="answer-text-btn" onClick={() => onAnswer('yes')} disabled={loading}>Yes</button>
+            <button className="answer-text-btn" onClick={() => onAnswer('no')} disabled={loading}>No</button>
+            <button className="answer-text-btn" onClick={() => onAnswer('dont_know')} disabled={loading}>Don't know</button>
+            <button className="answer-text-btn" onClick={() => onAnswer('probably')} disabled={loading}>Probably</button>
+            <button className="answer-text-btn" onClick={() => onAnswer('probably_not')} disabled={loading}>Probably not</button>
+            <div className="back-btn-separator"></div>
+            <button className="answer-text-btn back-btn" onClick={onBack} disabled={loading || questionCount <= 1}>Back</button>
+          </div>
+        </div>
+      </div>
     </div>
   );
 };

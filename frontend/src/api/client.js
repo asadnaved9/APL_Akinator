@@ -16,3 +16,10 @@ export const submitAnswerRequest = async (sessionId, answer) => {
   });
   return response.data;
 };
+
+export const submitBackRequest = async (sessionId) => {
+  const response = await api.post('/back', {
+    session_id: sessionId,
+  });
+  return response.data;
+};
