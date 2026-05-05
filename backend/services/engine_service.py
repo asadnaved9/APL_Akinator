@@ -13,6 +13,7 @@ class EngineService:
         self.players = self._load_dataset()
         self.all_attributes = list(self.players[0]["attributes"].keys()) if self.players else []
         self.feedback_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'feedback.json')
+        self.max_questions_map = {"8": 8, "20": 20}
         
     def _load_dataset(self) -> List[Dict[str, Any]]:
         data_path = os.path.join(os.path.dirname(os.path.dirname(os.path.abspath(__file__))), 'data', 'players.json')
@@ -32,7 +33,8 @@ class EngineService:
     def _get_selector(self, state: SessionState, prob_engine: ProbabilityEngine) -> QuestionSelector:
         selector = QuestionSelector(prob_engine, self.all_attributes)
         selector.asked_attributes = set(state.asked_questions)
-        selector.answered_attributes = state.answered_attributes.copy()
+        # Convert history list to dict for the selector
+        selector.answered_attributes = {item["attribute"]: (item["answer"] == "yes") for item in state.answer_history if item["answer"] in ["yes", "no"]}
         return selector
 
     def initialize_state(self, state: SessionState) -> Tuple[str, str]:
@@ -58,14 +60,38 @@ class EngineService:
         
         engine.update(state.last_attribute, answer, hard_mode=is_hard_mode)
         
-        if answer == "yes":
-            state.answered_attributes[state.last_attribute] = True
-        elif answer == "no":
-            state.answered_attributes[state.last_attribute] = False
+        state.answer_history.append({"attribute": state.last_attribute, "answer": answer})
             
         state.probabilities = engine.probabilities.copy()
         state.asked_questions.append(state.last_attribute)
         state.question_count += 1
+
+    def revert_state(self, state: SessionState) -> Optional[str]:
+        if not state.answer_history:
+            return None
+            
+        # Pop the last entry
+        last_entry = state.answer_history.pop()
+        last_attr = last_entry["attribute"]
+        
+        # Pop from asked_questions too
+        if state.asked_questions and state.asked_questions[-1] == last_attr:
+            state.asked_questions.pop()
+            
+        # Re-calculate probabilities from scratch
+        engine = ProbabilityEngine(self.players)
+        for entry in state.answer_history:
+            # Re-apply all previous answers
+            # Use same logic as process_answer (hard mode for first 3 or many players)
+            # This is slightly simplified but should be consistent
+            is_hard = len(state.answer_history) < 3 or engine.get_active_candidate_count() >= 100
+            engine.update(entry["attribute"], entry["answer"], hard_mode=is_hard)
+            
+        state.probabilities = engine.probabilities.copy()
+        state.question_count -= 1
+        state.last_attribute = last_attr
+        state.disambiguation_mode = False
+        return self.generator.generate_question(last_attr)
         
     def get_next_action(self, state: SessionState) -> Tuple[str, str, float, int, bool, str]:
         """
@@ -93,7 +119,8 @@ class EngineService:
             return ("guess", top1['name'], confidence, active_count, False, tribute)
             
         # 2. Max Question Limit
-        if state.question_count >= 8:
+        max_q = state.max_questions if hasattr(state, 'max_questions') and state.max_questions else 8
+        if state.question_count >= max_q:
             state.disambiguation_mode = True
             question_text = self.generator.generate_disambiguation(top1['name'])
             banter = self.generator.generate_banter(confidence, active_count, state.question_count)
@@ -116,11 +143,12 @@ class EngineService:
 
     def record_feedback(self, correct_player: str, was_correct: bool, session_id: str):
         """Reinforcement layer: Record feedback to improve future weighting."""
+        import datetime
         feedback_entry = {
             "session_id": session_id,
             "correct_player": correct_player,
             "was_correct": was_correct,
-            "timestamp": "now" # In a real app, use datetime
+            "timestamp": datetime.datetime.now().isoformat()
         }
         
         try:
@@ -129,9 +157,30 @@ class EngineService:
                 with open(self.feedback_path, 'r') as f:
                     data = json.load(f)
             data.append(feedback_entry)
+            # Keep only last 50 for performance
+            data = data[-50:]
             with open(self.feedback_path, 'w') as f:
                 json.dump(data, f, indent=2)
         except Exception as e:
             print(f"Error recording feedback: {e}")
+
+    def get_recent_games(self, limit: int = 10) -> List[str]:
+        try:
+            if not os.path.exists(self.feedback_path):
+                return []
+            with open(self.feedback_path, 'r') as f:
+                data = json.load(f)
+            # Get names of players guessed/corrected
+            recent = []
+            for entry in reversed(data):
+                player = entry.get("correct_player")
+                if player and player not in recent:
+                    recent.append(player)
+                if len(recent) >= limit:
+                    break
+            return recent
+        except Exception as e:
+            print(f"Error getting recent games: {e}")
+            return []
 
 engine_service = EngineService()

@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { startGameRequest, submitAnswerRequest, submitBackRequest } from '../api/client';
+import { startGameRequest, submitAnswerRequest, submitBackRequest, getRecentGamesRequest } from '../api/client';
 
 export const useGame = () => {
   const [sessionId, setSessionId] = useState(null);
@@ -12,14 +12,17 @@ export const useGame = () => {
   const [banter, setBanter] = useState('');
   const [questionCount, setQuestionCount] = useState(0);
   const [error, setError] = useState('');
+  const [recentGames, setRecentGames] = useState([]);
+  const [maxQuestions, setMaxQuestions] = useState(8);
 
-  const startGame = async () => {
+  const startGame = async (questions = 8) => {
     setLoading(true);
     setError('');
     setQuestionCount(0);
     setBanter('');
+    setMaxQuestions(questions);
     try {
-      const data = await startGameRequest();
+      const data = await startGameRequest(questions);
       setSessionId(data.session_id);
       setQuestion(data.question);
       setConfidence(data.confidence || 0);
@@ -30,6 +33,15 @@ export const useGame = () => {
       setError('Failed to start the game. Is the backend running?');
     } finally {
       setLoading(false);
+    }
+  };
+
+  const fetchRecentGames = async () => {
+    try {
+      const data = await getRecentGamesRequest();
+      setRecentGames(data);
+    } catch (err) {
+      console.error('Failed to fetch recent games');
     }
   };
 
@@ -118,11 +130,14 @@ export const useGame = () => {
     banter,
     questionCount,
     error,
+    recentGames,
+    maxQuestions,
     startGame,
     submitAnswer,
     submitDisambiguation,
     goToCorrection,
     goBack,
     resetGame,
+    fetchRecentGames,
   };
 };

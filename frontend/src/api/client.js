@@ -4,8 +4,13 @@ const api = axios.create({
   baseURL: 'http://localhost:8000/api',
 });
 
-export const startGameRequest = async () => {
-  const response = await api.post('/start');
+export const startGameRequest = async (maxQuestions = 8) => {
+  const response = await api.post('/start', { max_questions: maxQuestions });
+  return response.data;
+};
+
+export const getRecentGamesRequest = async () => {
+  const response = await api.get('/recent');
   return response.data;
 };
 

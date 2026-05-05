@@ -9,8 +9,10 @@ from services.telemetry import telemetry_service
 router = APIRouter()
 
 @router.post("/start", response_model=StartResponse)
-async def start_game():
+async def start_game(request: Optional[StartRequest] = None):
+    max_q = request.max_questions if request else 8
     session = session_service.create_session()
+    session.max_questions = max_q
     first_attr, banter = engine_service.initialize_state(session)
     question_text = engine_service.generator.generate_question(first_attr)
     session_service.save_session(session)
@@ -21,8 +23,13 @@ async def start_game():
         attribute=first_attr,
         confidence=0.0,
         remaining_candidates=len(engine_service.players),
-        banter=banter
+        banter=banter,
+        max_questions=max_q
     )
+
+@router.get("/recent", response_model=List[str])
+async def get_recent_games():
+    return engine_service.get_recent_games()
 
 @router.post("/answer", response_model=Union[NextQuestionResponse, GuessResponse])
 async def answer_question(request: AnswerRequest):
@@ -54,6 +61,39 @@ async def answer_question(request: AnswerRequest):
         remaining_candidates=remaining,
         is_disambiguation=is_disambiguation,
         banter=banter
+    )
+
+@router.post("/back", response_model=NextQuestionResponse)
+async def go_back(request: Request):
+    body = await request.json()
+    session_id = body.get("session_id")
+    if not session_id:
+        raise HTTPException(status_code=400, detail="session_id required")
+        
+    session = session_service.get_session(session_id)
+    if not session:
+        raise HTTPException(status_code=404, detail="Session not found")
+        
+    question_text = engine_service.revert_state(session)
+    if not question_text:
+        raise HTTPException(status_code=400, detail="Cannot go back further")
+        
+    session_service.save_session(session)
+    
+    # Get current engine metrics for response
+    engine = engine_service._get_probability_engine(session)
+    probs = engine.get_probabilities()
+    top1 = probs[0] if probs else {"probability": 1.0}
+    top2 = probs[1] if len(probs) > 1 else {"probability": 0}
+    confidence = top1['probability'] / (top1['probability'] + top2['probability'] + 1e-9)
+    
+    return NextQuestionResponse(
+        question=question_text,
+        attribute=session.last_attribute or "",
+        confidence=confidence,
+        remaining_candidates=engine.get_active_candidate_count(),
+        is_disambiguation=session.disambiguation_mode,
+        banter="Let's try that again..."
     )
 
 @router.post("/feedback")

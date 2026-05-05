@@ -8,9 +8,13 @@ class SessionState(BaseModel):
     question_count: int = 0
     stage: str = "HARD_FILTER" # HARD_FILTER or PROBABILISTIC
     last_attribute: Optional[str] = None
-    answered_attributes: Dict[str, bool] = Field(default_factory=dict)
+    answer_history: List[Dict[str, str]] = Field(default_factory=list) # List of {"attribute": attr, "answer": ans}
     disambiguation_mode: bool = False
     top_two_candidates: List[str] = Field(default_factory=list)
+    max_questions: int = 8
+
+class StartRequest(BaseModel):
+    max_questions: Optional[int] = 8
 
 class StartResponse(BaseModel):
     session_id: str
@@ -19,6 +23,7 @@ class StartResponse(BaseModel):
     confidence: float
     remaining_candidates: int
     banter: Optional[str] = None
+    max_questions: int = 8
 
 class AnswerRequest(BaseModel):
     session_id: str
