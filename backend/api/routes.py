@@ -1,7 +1,7 @@
 from fastapi import APIRouter, HTTPException, Depends, Request
-from typing import Union
+from typing import Union, Optional, List
 
-from api.models import StartResponse, AnswerRequest, NextQuestionResponse, GuessResponse, StateResponse, FeedbackRequest
+from api.models import StartResponse, AnswerRequest, NextQuestionResponse, GuessResponse, StateResponse, FeedbackRequest, StartRequest
 from services.session_service import session_service
 from services.engine_service import engine_service
 from services.telemetry import telemetry_service

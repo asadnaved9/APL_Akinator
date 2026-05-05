@@ -1,7 +1,17 @@
 import React from 'react';
-import mascotImg from '../assets/front_mascot.png';
+import downloadVideo from '../assets/Untitled design.mp4';
 
-export const DisambiguationCard = ({ question, loading, onAnswer, onBack }) => {
+export const DisambiguationCard = ({ 
+  question, 
+  loading, 
+  onAnswer, 
+  onBack, 
+  onHome,
+  questionCount,
+  maxQuestions
+}) => {
+  const progressPercent = Math.min(Math.round(((questionCount - 1) / maxQuestions) * 100), 100);
+
   return (
     <div className="game-screen-container">
       <div className="bg-decorations">
@@ -14,19 +24,42 @@ export const DisambiguationCard = ({ question, loading, onAnswer, onBack }) => {
 
       <div className="game-header">
         <div className="mini-logo-container">
-          <h2 className="mini-logo-text">akinator<span className="registered">®</span></h2>
-          <div className="language-selector">
-            English 🇬🇧
+          <h2 className="mini-logo-text" onClick={onHome} style={{ cursor: 'pointer' }}>
+            akinator<span className="registered">®</span>
+          </h2>
+          <div className="header-actions">
+            <button className="home-btn" onClick={onHome} title="Go to Home">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+            </button>
+            <div className="language-selector">English</div>
           </div>
         </div>
       </div>
 
       <div className="game-content-row">
         <div className="game-mascot-col">
-          <img src={mascotImg} alt="Akinator" className="game-mascot-img" />
+          <div className="mascot-video-container">
+            <video 
+              src={downloadVideo} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="mascot-video"
+            />
+          </div>
         </div>
         
         <div className="game-question-col">
+          <div className="progress-container">
+            <div className="progress-bar-bg">
+              <div className="progress-bar-fill" style={{ width: `${progressPercent}%` }}></div>
+            </div>
+            <span className="progress-text">{progressPercent}%</span>
+          </div>
+
           <div className="question-bubble-wrapper">
             <div className="question-number-tab" style={{ background: '#e74c3c' }}>
               <span className="diamond-bullet top-diamond">♦</span>

@@ -1,12 +1,16 @@
 import React, { useState } from 'react';
 import mascotImg from '../assets/front_mascot.png';
+import downloadVideo from '../assets/Untitled design.mp4';
 
-export const CorrectionCard = ({ onRestart }) => {
+export const CorrectionCard = ({ onRestart, onSubmitFeedback }) => {
   const [correctAnswer, setCorrectAnswer] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
     if (correctAnswer.trim()) {
+      if (onSubmitFeedback) {
+        onSubmitFeedback(correctAnswer, false);
+      }
       onRestart();
     }
   };
@@ -23,16 +27,32 @@ export const CorrectionCard = ({ onRestart }) => {
 
       <div className="game-header">
         <div className="mini-logo-container">
-          <h2 className="mini-logo-text">akinator<span className="registered">®</span></h2>
-          <div className="language-selector">
-            English 🇬🇧
+          <h2 className="mini-logo-text" onClick={onRestart} style={{ cursor: 'pointer' }}>
+            akinator<span className="registered">®</span>
+          </h2>
+          <div className="header-actions">
+            <button className="home-btn" onClick={onRestart} title="Go to Home">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+            </button>
+            <div className="language-selector">English</div>
           </div>
         </div>
       </div>
 
       <div className="game-content-row">
         <div className="game-mascot-col">
-          <img src={mascotImg} alt="Akinator" className="game-mascot-img" />
+          <div className="mascot-video-container">
+            <video 
+              src={downloadVideo} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="mascot-video"
+            />
+          </div>
         </div>
         
         <div className="game-question-col">

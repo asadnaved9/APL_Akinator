@@ -25,16 +25,25 @@ function App() {
     goBack,
     goToCorrection,
     resetGame,
-    questionCount
+    questionCount,
+    recentGames,
+    fetchRecentGames,
+    submitFeedback,
+    maxQuestions
   } = useGame();
 
   const containerRef = useRef(null);
 
-  // Transition animation when phase changes
+  useEffect(() => {
+    if (phase === 'start') {
+      fetchRecentGames();
+    }
+  }, [phase]);
+
   useEffect(() => {
     if (containerRef.current) {
       anime({
-        targets: '.glass-card',
+        targets: containerRef.current,
         translateY: [20, 0],
         opacity: [0, 1],
         easing: 'easeOutExpo',
@@ -52,7 +61,7 @@ function App() {
       )}
 
       {phase === 'start' && (
-        <StartScreen onStart={startGame} loading={loading} />
+        <StartScreen onStart={startGame} loading={loading} recentGames={recentGames} />
       )}
 
       {phase === 'question' && (
@@ -63,7 +72,9 @@ function App() {
           loading={loading}
           onAnswer={submitAnswer}
           onBack={goBack}
+          onHome={resetGame}
           questionCount={questionCount}
+          maxQuestions={maxQuestions}
           banter={banter}
         />
       )}
@@ -74,6 +85,9 @@ function App() {
           loading={loading}
           onAnswer={submitDisambiguation}
           onBack={goBack}
+          onHome={resetGame}
+          questionCount={questionCount}
+          maxQuestions={maxQuestions}
         />
       )}
 
@@ -84,6 +98,7 @@ function App() {
           onRestart={resetGame}
           onBack={goBack}
           onWrong={goToCorrection}
+          onSubmitFeedback={submitFeedback}
           banter={banter}
         />
       )}
@@ -91,6 +106,7 @@ function App() {
       {phase === 'correction' && (
         <CorrectionCard 
           onRestart={resetGame}
+          onSubmitFeedback={submitFeedback}
         />
       )}
     </div>

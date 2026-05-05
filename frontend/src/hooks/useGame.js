@@ -1,5 +1,5 @@
 import { useState } from 'react';
-import { startGameRequest, submitAnswerRequest, submitBackRequest, getRecentGamesRequest } from '../api/client';
+import { startGameRequest, submitAnswerRequest, submitBackRequest, getRecentGamesRequest, submitFeedbackRequest } from '../api/client';
 
 export const useGame = () => {
   const [sessionId, setSessionId] = useState(null);
@@ -10,17 +10,17 @@ export const useGame = () => {
   const [loading, setLoading] = useState(false);
   const [guess, setGuess] = useState('');
   const [banter, setBanter] = useState('');
+  const [maxQuestions, setMaxQuestions] = useState(8);
   const [questionCount, setQuestionCount] = useState(0);
   const [error, setError] = useState('');
   const [recentGames, setRecentGames] = useState([]);
-  const [maxQuestions, setMaxQuestions] = useState(8);
 
   const startGame = async (questions = 8) => {
+    setMaxQuestions(questions);
     setLoading(true);
     setError('');
     setQuestionCount(0);
     setBanter('');
-    setMaxQuestions(questions);
     try {
       const data = await startGameRequest(questions);
       setSessionId(data.session_id);
@@ -119,6 +119,15 @@ export const useGame = () => {
     setError('');
   };
 
+  const submitFeedback = async (correctPlayer, wasCorrect) => {
+    try {
+      await submitFeedbackRequest(sessionId, correctPlayer, wasCorrect);
+      fetchRecentGames(); // Refresh history
+    } catch (err) {
+      console.error('Failed to submit feedback');
+    }
+  };
+
   return {
     sessionId,
     phase,
@@ -139,5 +148,7 @@ export const useGame = () => {
     goBack,
     resetGame,
     fetchRecentGames,
+    submitFeedback,
+    maxQuestions,
   };
 };

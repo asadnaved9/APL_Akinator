@@ -1,9 +1,24 @@
 import React from 'react';
-import mascotImg from '../assets/front_mascot.png';
+import mascotImg from '../assets/mascot_asad.png';
 
-export const StartScreen = ({ onStart, loading }) => {
+export const StartScreen = ({ onStart, loading, recentGames = [] }) => {
   return (
     <div className="start-screen-container">
+      {/* Recent Games Box */}
+      {recentGames.length > 0 && (
+        <div className="recent-games-sidebar">
+          <div className="recent-games-box">
+            <h3 className="recent-title">Last 10 games</h3>
+            <div className="recent-divider"></div>
+            <ul className="recent-list">
+              {recentGames.map((name, i) => (
+                <li key={i} className="recent-item">{name}</li>
+              ))}
+            </ul>
+          </div>
+        </div>
+      )}
+
       {/* Background decorations */}
       <div className="bg-decorations">
         <div className="diamond d1"></div>
@@ -11,6 +26,9 @@ export const StartScreen = ({ onStart, loading }) => {
         <div className="diamond d3"></div>
         <div className="diamond d4"></div>
         <div className="diamond d5"></div>
+        <div className="diamond d6"></div>
+        <div className="diamond d7"></div>
+        <div className="diamond d8"></div>
       </div>
 
       <div className="mascot-section">
@@ -26,7 +44,7 @@ export const StartScreen = ({ onStart, loading }) => {
       </div>
       
       <div className="logo-container">
-        <h1 className="logo-text">APL-Akinator<span className="registered"></span></h1>
+        <h1 className="logo-text">Akinator<span className="registered"></span></h1>
       </div>
       
       <div className="start-footer">
@@ -39,14 +57,17 @@ export const StartScreen = ({ onStart, loading }) => {
           <span className="settings-text">Settings</span>
         </div>
         
-        <div className="store-buttons">
-          
+        <div className="store-buttons" style={{ flexDirection: 'column' }}>
+           <div className="game-modes" style={{ display: 'flex', gap: '10px', marginBottom: '15px' }}>
+             <button className="mode-btn" onClick={() => onStart(8)} disabled={loading}>8 Questions</button>
+             <button className="mode-btn" onClick={() => onStart(20)} disabled={loading}>20 Questions</button>
+           </div>
            
            <div className="play-btn-wrapper">
                <span className="dots">♦ ♦</span>
                <button 
                  className="action-btn play-btn" 
-                 onClick={onStart}
+                 onClick={() => onStart(8)}
                  disabled={loading}
                >
                  {loading ? 'WAIT...' : 'PLAY'}
@@ -57,8 +78,9 @@ export const StartScreen = ({ onStart, loading }) => {
       </div>
 
       <div className="metrics-bottom">
-        <p>1078 people are playing right now.</p>
-        <p>458434389 games played 11807 today.</p>
+        <p>It is a Cricket Player Guessing Game</p>
+        <br />
+        <p>Developed by Students of NSU</p>
       </div>
     </div>
   );

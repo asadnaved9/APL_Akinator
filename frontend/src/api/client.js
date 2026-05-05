@@ -28,3 +28,11 @@ export const submitBackRequest = async (sessionId) => {
   });
   return response.data;
 };
+export const submitFeedbackRequest = async (sessionId, correctPlayer, wasCorrect) => {
+  const response = await api.post('/feedback', {
+    session_id: sessionId,
+    correct_player: correctPlayer,
+    was_correct: wasCorrect,
+  });
+  return response.data;
+};

@@ -1,5 +1,6 @@
 import json
 import os
+import datetime
 from typing import Tuple, List, Dict, Any, Optional
 
 from api.models import SessionState
@@ -143,7 +144,6 @@ class EngineService:
 
     def record_feedback(self, correct_player: str, was_correct: bool, session_id: str):
         """Reinforcement layer: Record feedback to improve future weighting."""
-        import datetime
         feedback_entry = {
             "session_id": session_id,
             "correct_player": correct_player,

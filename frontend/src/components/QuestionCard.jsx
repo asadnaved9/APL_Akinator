@@ -1,6 +1,6 @@
 import React from 'react';
 import mascotImg from '../assets/front_mascot.png';
-import downloadVideo from '../assets/untitled design.mp4';
+import downloadVideo from '../assets/Untitled design.mp4';
 
 export const QuestionCard = ({ 
   question, 
@@ -9,9 +9,13 @@ export const QuestionCard = ({
   loading, 
   onAnswer,
   onBack,
+  onHome,
   questionCount,
+  maxQuestions,
   banter
 }) => {
+  const progressPercent = Math.min(Math.round(((questionCount - 1) / maxQuestions) * 100), 100);
+
   return (
     <div className="game-screen-container">
       {/* Background decorations shared with start screen */}
@@ -25,26 +29,45 @@ export const QuestionCard = ({
 
       <div className="game-header">
         <div className="mini-logo-container">
-          <h2 className="mini-logo-text">akinator<span className="registered">®</span></h2>
-          <div className="language-selector">
-            English
+          <h2 className="mini-logo-text" onClick={onHome} style={{ cursor: 'pointer' }}>
+            akinator<span className="registered">®</span>
+          </h2>
+          <div className="header-actions">
+            <button className="home-btn" onClick={onHome} title="Go to Home">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+            </button>
+            <div className="language-selector">English</div>
           </div>
         </div>
       </div>
 
       <div className="game-content-row">
-        <div className="game-mascot-col" style={{ overflow: 'hidden', borderRadius: '50%', width: '350px', height: '350px', flexShrink: 0 }}>
-          <video 
-            src={downloadVideo} 
-            autoPlay 
-            loop 
-            muted 
-            playsInline 
-            style={{ width: '100%', height: '100%', objectFit: 'cover', display: 'block' }} 
-          />
+        <div className="game-mascot-col">
+          <div className="mascot-video-container">
+            <video 
+              src={downloadVideo} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="mascot-video"
+            />
+          </div>
         </div>
         
-        <div className="game-question-col ">
+        <div className="game-question-col">
+          <div className="progress-container">
+            <div className="progress-bar-bg">
+              <div className="progress-bar-fill" style={{ width: `${progressPercent}%` }}></div>
+            </div>
+            <span className="progress-text">{progressPercent}%</span>
+          </div>
+          <div className="diamond d6"></div>
+        <div className="diamond d7"></div>
+        <div className="diamond d8"></div>
+
           <div className="question-bubble-wrapper">
             <div className="question-number-tab">
               <span className="diamond-bullet top-diamond">♦</span>

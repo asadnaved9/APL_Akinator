@@ -1,7 +1,14 @@
 import React from 'react';
 import mascotImg from '../assets/front_mascot.png';
+import downloadVideo from '../assets/Untitled design.mp4';
 
-export const ResultCard = ({ guess, confidence, onRestart, onBack, onWrong, banter }) => {
+export const ResultCard = ({ guess, confidence, onRestart, onBack, onWrong, banter, onSubmitFeedback }) => {
+  const handleYes = () => {
+    if (onSubmitFeedback) {
+      onSubmitFeedback(guess, true);
+    }
+    onRestart();
+  };
   return (
     <div className="game-screen-container">
       <div className="bg-decorations">
@@ -14,16 +21,32 @@ export const ResultCard = ({ guess, confidence, onRestart, onBack, onWrong, bant
 
       <div className="game-header">
         <div className="mini-logo-container">
-          <h2 className="mini-logo-text">akinator<span className="registered">®</span></h2>
-          <div className="language-selector">
-            English 🇬🇧
+          <h2 className="mini-logo-text" onClick={onRestart} style={{ cursor: 'pointer' }}>
+            akinator<span className="registered">®</span>
+          </h2>
+          <div className="header-actions">
+            <button className="home-btn" onClick={onRestart} title="Go to Home">
+              <svg viewBox="0 0 24 24" fill="currentColor" width="20" height="20">
+                <path d="M10 20v-6h4v6h5v-8h3L12 3 2 12h3v8z"/>
+              </svg>
+            </button>
+            <div className="language-selector">English</div>
           </div>
         </div>
       </div>
 
       <div className="game-content-row">
         <div className="game-mascot-col">
-          <img src={mascotImg} alt="Akinator" className="game-mascot-img" />
+          <div className="mascot-video-container">
+            <video 
+              src={downloadVideo} 
+              autoPlay 
+              loop 
+              muted 
+              playsInline 
+              className="mascot-video"
+            />
+          </div>
         </div>
         
         <div className="game-question-col">
@@ -34,7 +57,7 @@ export const ResultCard = ({ guess, confidence, onRestart, onBack, onWrong, bant
               <p className="guess-subtitle">{banter || 'Guessed by Akinator'}</p>
               
               <div className="result-actions">
-                <button className="result-btn btn-yes" onClick={onRestart}>Yes</button>
+                <button className="result-btn btn-yes" onClick={handleYes}>Yes</button>
                 <div className="result-diamond">♦</div>
                 <button className="result-btn btn-no" onClick={onBack}>No</button>
               </div>
@@ -43,7 +66,13 @@ export const ResultCard = ({ guess, confidence, onRestart, onBack, onWrong, bant
           
           <div className="result-image-box">
             <div className="placeholder-image">
-              <img src="https://via.placeholder.com/300x200.png?text=Character+Image" alt="Character" />
+              <img 
+                src={`https://tse1.mm.bing.net/th?q=${encodeURIComponent(guess)}+IPL+player+official+profile+photo`} 
+                alt={guess} 
+                onError={(e) => {
+                  e.target.src = 'https://via.placeholder.com/300x400.png?text=Player+Image+Not+Found';
+                }}
+              />
             </div>
           </div>
 
